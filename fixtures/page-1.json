@@ -1,0 +1,146 @@
+{
+  "campaign_id": "cmp_01",
+  "total": 48,
+  "creators": [
+    {
+      "id": "crt_0053",
+      "name": "Criador 53",
+      "niche_score": 2,
+      "latest_reach": 83655,
+      "deliveries_90d": 0
+    },
+    {
+      "id": "crt_0080",
+      "name": "Criador 80",
+      "niche_score": 2,
+      "latest_reach": 69391,
+      "deliveries_90d": 3
+    },
+    {
+      "id": "crt_0047",
+      "name": "Criador 47",
+      "niche_score": 2,
+      "latest_reach": 68963,
+      "deliveries_90d": 3
+    },
+    {
+      "id": "crt_0030",
+      "name": "Criador 30",
+      "niche_score": 2,
+      "latest_reach": 56479,
+      "deliveries_90d": 2
+    },
+    {
+      "id": "crt_0039",
+      "name": "Criador 39",
+      "niche_score": 2,
+      "latest_reach": 22512,
+      "deliveries_90d": 0
+    },
+    {
+      "id": "crt_0044",
+      "name": "Criador 44",
+      "niche_score": 2,
+      "latest_reach": 5017,
+      "deliveries_90d": 1
+    },
+    {
+      "id": "crt_0045",
+      "name": "Criador 45",
+      "niche_score": 1,
+      "latest_reach": 187477,
+      "deliveries_90d": 0
+    },
+    {
+      "id": "crt_0077",
+      "name": "Criador 77",
+      "niche_score": 1,
+      "latest_reach": 166794,
+      "deliveries_90d": 3
+    },
+    {
+      "id": "crt_0008",
+      "name": "Criador 8",
+      "niche_score": 1,
+      "latest_reach": 161928,
+      "deliveries_90d": 2
+    },
+    {
+      "id": "crt_0010",
+      "name": "Criador 10",
+      "niche_score": 1,
+      "latest_reach": 156107,
+      "deliveries_90d": 1
+    },
+    {
+      "id": "crt_0007",
+      "name": "Criador 7",
+      "niche_score": 1,
+      "latest_reach": 148529,
+      "deliveries_90d": 1
+    },
+    {
+      "id": "crt_0009",
+      "name": "Criador 9",
+      "niche_score": 1,
+      "latest_reach": 134744,
+      "deliveries_90d": 0
+    },
+    {
+      "id": "crt_0069",
+      "name": "Criador 69",
+      "niche_score": 1,
+      "latest_reach": 129064,
+      "deliveries_90d": 0
+    },
+    {
+      "id": "crt_0049",
+      "name": "Criador 49",
+      "niche_score": 1,
+      "latest_reach": 127749,
+      "deliveries_90d": 1
+    },
+    {
+      "id": "crt_0068",
+      "name": "Criador 68",
+      "niche_score": 1,
+      "latest_reach": 120254,
+      "deliveries_90d": 2
+    },
+    {
+      "id": "crt_0015",
+      "name": "Criador 15",
+      "niche_score": 1,
+      "latest_reach": 119171,
+      "deliveries_90d": 3
+    },
+    {
+      "id": "crt_0054",
+      "name": "Criador 54",
+      "niche_score": 1,
+      "latest_reach": 117333,
+      "deliveries_90d": 2
+    },
+    {
+      "id": "crt_0001",
+      "name": "Criador 1",
+      "niche_score": 1,
+      "latest_reach": 107476,
+      "deliveries_90d": 2
+    },
+    {
+      "id": "crt_0076",
+      "name": "Criador 76",
+      "niche_score": 1,
+      "latest_reach": 105128,
+      "deliveries_90d": 1
+    },
+    {
+      "id": "crt_0070",
+      "name": "Criador 70",
+      "niche_score": 1,
+      "latest_reach": 102805,
+      "deliveries_90d": 1
+    }
+  ]
+}
