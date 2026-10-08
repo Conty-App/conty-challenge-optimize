@@ -39,4 +39,76 @@ describe("descoberta de criadores", () => {
     const res = await app.request("/campaigns/cmp_missing/creators");
     expect(res.status).toBe(404);
   });
+
+  it("mantém o teto de queries com 600 criadores", async () => {
+    const db = openDatabase(":memory:");
+    seed(db, { creators: 600, seed: 7 });
+    const big = createApp(db);
+    resetQueryCount();
+    const res = await big.request(`/campaigns/${CAMPAIGN_ID}/creators?limit=20&offset=0`);
+    expect(res.status).toBe(200);
+    expect(getQueryCount()).toBeLessThanOrEqual(8);
+  });
+});
+
+type Page = {
+  total: number;
+  creators: Array<{ id: string; niche_score: number; latest_reach: number; deliveries_90d: number }>;
+};
+
+describe("casos de borda da listagem", () => {
+  function edgeApp() {
+    const db = openDatabase(":memory:");
+    db.exec(`
+      INSERT INTO campaigns VALUES ('cmp_edge', 'Borda', '["beleza","moda"]');
+      INSERT INTO creators VALUES
+        ('crt_a', 'Empate', '["beleza"]', ''),
+        ('crt_b', 'Sem conta', '["beleza"]', ''),
+        ('crt_c', 'Conta sem métrica', '["beleza"]', ''),
+        ('crt_d', 'Entrega no limite', '["moda"]', ''),
+        ('crt_e', 'Fora do nicho', '["games"]', '');
+      INSERT INTO social_accounts VALUES
+        ('acc_a', 'crt_a', 'instagram'),
+        ('acc_c', 'crt_c', 'instagram'),
+        ('acc_e', 'crt_e', 'instagram');
+      INSERT INTO metrics VALUES
+        ('met_a1', 'acc_a', 10, '2026-05-30T00:00:00.000Z', ''),
+        ('met_a2', 'acc_a', 99, '2026-05-30T00:00:00.000Z', ''),
+        ('met_a0', 'acc_a', 500, '2026-05-01T00:00:00.000Z', ''),
+        ('met_e1', 'acc_e', 777, '2026-05-30T00:00:00.000Z', '');
+      INSERT INTO deliveries VALUES
+        ('del_d1', 'crt_d', '2026-03-03T12:00:00.000Z'),
+        ('del_d2', 'crt_d', '2026-03-03T11:59:59.999Z');
+    `);
+    return createApp(db);
+  }
+
+  async function page(app: ReturnType<typeof createApp>, query = ""): Promise<Page> {
+    const res = await app.request(`/campaigns/cmp_edge/creators${query}`);
+    expect(res.status).toBe(200);
+    return (await res.json()) as Page;
+  }
+
+  it("desempata a métrica mais recente pelo id decrescente", async () => {
+    const result = await page(edgeApp());
+    expect(result.creators.find((creator) => creator.id === "crt_a")?.latest_reach).toBe(99);
+  });
+
+  it("lista quem não tem conta ou métrica com alcance zero e deixa de fora score zero", async () => {
+    const result = await page(edgeApp());
+    expect(result.creators.map((creator) => creator.id)).toEqual(["crt_a", "crt_b", "crt_c", "crt_d"]);
+    expect(result.creators.find((creator) => creator.id === "crt_b")?.latest_reach).toBe(0);
+    expect(result.creators.find((creator) => creator.id === "crt_c")?.latest_reach).toBe(0);
+  });
+
+  it("conta a entrega exatamente no limite dos 90 dias e não a de 1 ms antes", async () => {
+    const result = await page(edgeApp());
+    expect(result.creators.find((creator) => creator.id === "crt_d")?.deliveries_90d).toBe(1);
+  });
+
+  it("mantém o total quando o offset passa do fim", async () => {
+    const result = await page(edgeApp(), "?limit=20&offset=50");
+    expect(result.creators).toEqual([]);
+    expect(result.total).toBe(4);
+  });
 });
